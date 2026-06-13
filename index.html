@@ -76,14 +76,20 @@
             <div id="dpa-timer-block" class="flex-1 glass-panel p-2 rounded-lg border-l-2 border-red-500 hidden relative">
                 <div class="flex justify-between items-center mb-1">
                     <span class="tomorrow-font text-[9px] text-red-400 font-bold uppercase tracking-tighter flex items-center gap-1"><span class="w-1.5 h-1.5 bg-red-500 rounded-full animate-ping"></span> DPA</span>
-                    <span id="dpa-timer-text" class="tomorrow-font text-[11px] text-red-300 font-bold">--:--</span>
+                    <div class="flex items-center gap-1.5">
+                        <span id="dpa-timer-text" class="tomorrow-font text-[11px] text-red-300 font-bold">--:--</span>
+                        <button onclick="clearCooldown('dpa')" class="tomorrow-font text-[8px] text-cyan-300 border border-cyan-500/50 bg-cyan-900/30 rounded px-1.5 py-0.5 font-bold uppercase active:bg-cyan-700">解除</button>
+                    </div>
                 </div>
                 <div class="h-1.5 bg-slate-800 rounded-full overflow-hidden"><div id="dpa-timer-bar" class="h-full bg-red-500 transition-all" style="width: 0%"></div></div>
             </div>
             <div id="pp-timer-block" class="flex-1 glass-panel p-2 rounded-lg border-l-2 border-yellow-500 hidden relative">
                 <div class="flex justify-between items-center mb-1">
                     <span class="tomorrow-font text-[9px] text-yellow-500 font-bold uppercase tracking-tighter flex items-center gap-1"><span class="w-1.5 h-1.5 bg-yellow-500 rounded-full animate-ping"></span> PP</span>
-                    <span id="pp-timer-text" class="tomorrow-font text-[11px] text-yellow-300 font-bold">--:--</span>
+                    <div class="flex items-center gap-1.5">
+                        <span id="pp-timer-text" class="tomorrow-font text-[11px] text-yellow-300 font-bold">--:--</span>
+                        <button onclick="clearCooldown('pp')" class="tomorrow-font text-[8px] text-cyan-300 border border-cyan-500/50 bg-cyan-900/30 rounded px-1.5 py-0.5 font-bold uppercase active:bg-cyan-700">解除</button>
+                    </div>
                 </div>
                 <div class="h-1.5 bg-slate-800 rounded-full overflow-hidden"><div id="pp-timer-bar" class="h-full bg-yellow-500 transition-all" style="width: 0%"></div></div>
             </div>
@@ -484,6 +490,7 @@
             document.getElementById('cooldown-container').classList.toggle('hidden',!any);
         }
         function markPassUsed(id, type){ haptic(30); const log=history.find(h=>h.id===id); if(log){ log.passUsed=true; if(type==='dpa') dpaCooldownTime=null; if(type==='pp') ppCooldownTime=null; saveData(); renderTimeline(); updateCooldownDisplay(); toast('パス使用済みにしました'); } }
+        function clearCooldown(type){ haptic(20); if(type==='dpa') dpaCooldownTime=null; if(type==='pp') ppCooldownTime=null; saveData(); updateCooldownDisplay(); toast(`${type.toUpperCase()} クールダウンを解除しました`); }
 
         function openCategory(type, silent=false){
             if(!silent) haptic(10);
